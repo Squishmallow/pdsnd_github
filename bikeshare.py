@@ -17,14 +17,16 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     while True:
+        # get which city's data to access
         city = input("Which city's data would you like to see? (Chicago, Washington, New York City) ")
         city = city.lower()
         if city == 'chicago' or city == 'washington' or city == 'new york city':
             break
-        else:
+        else: # make sure that it can handle inputs not specified
             print("That's not a valid city!")
 
     while True:
+        # get month filter
         month = input("Which month's data would you like to see? (All, January, February, March, April, May, June) ")
         month = month.lower()
         if month == 'all' or month == 'january' or month == 'february' or month == 'march' or month == 'april' or month == 'may' or month == 'june':
@@ -33,6 +35,7 @@ def get_filters():
             print("That's not a valid month!")
 
     while True:
+        # get day of week filter
         day = input("Which day of the week's data would you like to see? (All, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) ")
         day = day.lower()
         if day == 'all' or day == 'monday' or day == 'tuesday' or day == 'wednesday' or day == 'thursday' or day == 'friday' or day == 'saturday' or day == 'sunday':
@@ -40,7 +43,7 @@ def get_filters():
         else:
             print("That's not a valid day of the week!")
 
-    print('-'*40)
+    print('-'*40) # line of dashes to break it up
     return city, month, day
 
 
@@ -56,22 +59,22 @@ def load_data(city, month, day):
         df - pandas DataFrame containing city data filtered by month and day
     """
 
-    df = pd.read_csv(CITY_DATA[city])
+    df = pd.read_csv(CITY_DATA[city]) # get the data into a DataFrame
 
-    df['Start Time'] = pd.to_datetime(df['Start Time'])
+    df['Start Time'] = pd.to_datetime(df['Start Time']) # convert to a timestammp
 
-    df['month'] = df['Start Time'].dt.month
-    df['day_of_week'] = df['Start Time'].dt.weekday_name
+    df['month'] = df['Start Time'].dt.month # separate the month
+    df['day_of_week'] = df['Start Time'].dt.weekday_name # separate the day of week
 
 
-    if month != 'all':
+    if month != 'all': # filter by mmonth
         months = ['january', 'february', 'march', 'april', 'may', 'june']
         month = months.index(month) + 1
 
         df = df[df['month'] == month]
 
 
-    if day != 'all':
+    if day != 'all': # filter by day of week
         df = df[df['day_of_week'] == day.title()]
 
     return df
@@ -83,17 +86,20 @@ def time_stats(df):
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
 
+    # calculate most common month
     df["Start Time"] = pd.to_datetime(df["Start Time"])
     df["month"] = df["Start Time"].dt.month
     popular_month = df["month"].mode()[0]
     MONTH_DICT = {1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June"}
     print("The most popular month to travel is {}.".format(MONTH_DICT[popular_month]))
 
+    # calculate most common day of week
     df["day"] = df["Start Time"].dt.dayofweek
     popular_day = df["day"].mode()[0]
     DAY_DICT = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday"}
     print("The most popular day of the week to travel is {}.".format(DAY_DICT[popular_day]))
 
+    # calculate most common hour
     df['hour'] = df['Start Time'].dt.hour
     popular_hour = df['hour'].mode()[0]
     print("The most frequent start hour is {}.".format(popular_hour))
@@ -108,6 +114,7 @@ def station_stats(df):
     print('\nCalculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
 
+    # calculate most common start station, then end station, then round trip
     start_station = df["Start Station"].mode()[0]
     print("The most commonly used start station is {}.".format(start_station))
 
@@ -179,7 +186,8 @@ def display_data(df):
     while view_data.startswith('y'):
         df_indiv = df.iloc[start_loc:end_loc]
         df_list = df_indiv.values.tolist()
-        for item in df_list:
+        for item in df_list: # this is so that all of the columns are visible
+        # because it wouldn't always do that in the DataFrame
             print(item)
         start_loc += 5
         end_loc += 5
