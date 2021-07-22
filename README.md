@@ -6,10 +6,12 @@
 ### Bikeshare.py
 
 ### Description
-Analyze and display bikeshare statistics for three different cities: Chicago, New York, and Washington D.C., while providing additional filters for month and day of week. Statistics include most frequent times of travel, most popular stations, most popular round trip, total and mean trip duration, and user stats like most common birth year. 
+Analyze and display bikeshare statistics for three different cities: Chicago, New York, and Washington D.C., while providing additional filters for month and day of week. Statistics include most frequent times of travel, most popular stations, most popular round trip, total and mean trip duration, and user stats like most common birth year.
 
 ### Files used
-Include the files used
+chicago.csv
+new_york_city.csv
+washington.csv
 
 ### Credits
 It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
