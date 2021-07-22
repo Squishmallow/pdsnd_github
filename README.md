@@ -14,4 +14,7 @@ new_york_city.csv
 washington.csv
 
 ### Credits
-It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
+StackOverflow for python/numpy/pandas syntax
+Udacity for project template
+w3resource for the pandas dayofweek property
+geeksforgeeks for getting the hour out of a timestamp
